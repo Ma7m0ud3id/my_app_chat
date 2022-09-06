@@ -132,6 +132,7 @@ class _CreateState extends BaseState<Create,RegistarViweModel> implements States
             }, child: Text('Create Acount',style: TextStyle(color: Colors.black),)),
             InkWell(
               onTap: (){
+                //,
                   Navigator.pushNamed(context, LoginScreen.routName);
                 },
                 child: Text('I have an account',style: TextStyle(color: Colors.blue),)),
