@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/Screens/Creat_acount.dart';
+import 'package:untitled1/Screens/Create/Creat_acount.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled1/Screens/Login_Screen/Login.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
        initialRoute:Create.routName ,
       routes: {
         Create.routName:(c)=>Create(),
+        LoginScreen.routName:(v)=>LoginScreen(),
       },
     );
   }

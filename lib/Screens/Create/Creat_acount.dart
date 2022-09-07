@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled1/Screens/States.dart';
-import 'package:untitled1/Screens/registar_model.dart';
+import 'package:untitled1/Screens/Create/States.dart';
+import 'package:untitled1/Screens/Create/registar_model.dart';
+import 'package:untitled1/Screens/Login_Screen/Login.dart';
+
+import '../../base.dart';
 
 class Create extends StatefulWidget  {
-  static const String routName = 'bjjbascfj';
+  static const String routName = 'Create';
 
   @override
   State<Create> createState() => _CreateState();
 }
 
-class _CreateState extends State<Create>implements States {
+class _CreateState extends BaseState<Create,RegistarViweModel> implements States {
   var formKey = GlobalKey<FormState>();
 
   var fristnamecontroller = TextEditingController();
@@ -23,23 +26,25 @@ class _CreateState extends State<Create>implements States {
 
   var passwordcontroller = TextEditingController();
 
-RegistarViweModel registarViweModel=RegistarViweModel();
+//RegistarViweModel registarViweModel=RegistarViweModel();
+
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    registarViweModel.states=this;
+    viewModel.Navigatore=this;
   }
 
   @override
   Widget build(BuildContext context) {
 
     return ChangeNotifierProvider(
-      create: (c)=>registarViweModel,
+      create: (c)=>viewModel,
       child: Stack(
         children: [
       Container(child: Image.asset('assets/background.jpeg',)),
       Scaffold(
+        resizeToAvoidBottomInset: false,
       appBar: AppBar(
       centerTitle: true,
       title: Text('Create Acount',style: TextStyle(color: Colors.black),),
@@ -124,7 +129,12 @@ RegistarViweModel registarViweModel=RegistarViweModel();
             ),
             ElevatedButton(onPressed: (){
                 Registar();
-            }, child: Text('Create Acount',style: TextStyle(color: Colors.black),))
+            }, child: Text('Create Acount',style: TextStyle(color: Colors.black),)),
+            InkWell(
+              onTap: (){
+                  Navigator.pushNamed(context, LoginScreen.routName);
+                },
+                child: Text('I have an account',style: TextStyle(color: Colors.blue),)),
 
           ]
           ),
@@ -139,40 +149,14 @@ RegistarViweModel registarViweModel=RegistarViweModel();
 
   void Registar(){
     if (formKey.currentState!.validate()) {
-       registarViweModel.Register(emailcontroller.text, passwordcontroller.text);
+      viewModel.Register(emailcontroller.text, passwordcontroller.text);
     }
   }
 
   @override
-  void hideloding() {
-    Navigator.pop(context);
-  }
-
-  @override
-  void showloding() {
-    showDialog(
-
-        context: context,
-        builder: (context) {
-          return Center(child: CircularProgressIndicator());
-        });
+  RegistarViweModel intichange() {
+    return RegistarViweModel();
   }
 
 
-  @override
-  void showmassage(String text) {
-    showDialog(
-
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Row(
-              children: [
-                Expanded(child: Text(text,style: TextStyle(color: Colors.black),))
-
-              ],
-            ),
-          );
-        });
-  }
 }
