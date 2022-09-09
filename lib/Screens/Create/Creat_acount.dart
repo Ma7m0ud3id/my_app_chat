@@ -3,17 +3,20 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/Screens/Create/States.dart';
 import 'package:untitled1/Screens/Create/registar_model.dart';
 import 'package:untitled1/Screens/Login_Screen/Login.dart';
+import 'package:untitled1/models/my_user.dart';
 
 import '../../base.dart';
+import '../../providers/user_provider.dart';
+import '../home/home.dart';
 
-class Create extends StatefulWidget  {
+class Createe extends StatefulWidget  {
   static const String routName = 'Create';
 
   @override
-  State<Create> createState() => _CreateState();
+  State<Createe> createState() => _CreateState();
 }
 
-class _CreateState extends BaseState<Create,RegistarViweModel> implements States {
+class _CreateState extends BaseState<Createe,RegistarViweModel> implements States {
   var formKey = GlobalKey<FormState>();
 
   var fristnamecontroller = TextEditingController();
@@ -42,13 +45,16 @@ class _CreateState extends BaseState<Create,RegistarViweModel> implements States
       create: (c)=>viewModel,
       child: Stack(
         children: [
-      Container(child: Image.asset('assets/background.jpeg',)),
+      Container(child: Image.asset('assets/images/main_bg.png',
+        fit: BoxFit.fill,height: double.infinity
+        ,width: double.infinity,)),
       Scaffold(
+        backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: false,
       appBar: AppBar(
       centerTitle: true,
       title: Text('Create Acount',style: TextStyle(color: Colors.black),),
-      backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
       elevation: 0,
       ),
       body: Padding(
@@ -128,7 +134,7 @@ class _CreateState extends BaseState<Create,RegistarViweModel> implements States
               },
             ),
             ElevatedButton(onPressed: (){
-                Registar();
+              CreateAccount();
             }, child: Text('Create Acount',style: TextStyle(color: Colors.black),)),
             InkWell(
               onTap: (){
@@ -148,15 +154,24 @@ class _CreateState extends BaseState<Create,RegistarViweModel> implements States
     );
     }
 
-  void Registar(){
+  void CreateAccount(){
     if (formKey.currentState!.validate()) {
-      viewModel.Register(emailcontroller.text, passwordcontroller.text);
+      viewModel.CreateAccount(emailcontroller.text,passwordcontroller.text,fristnamecontroller.text,
+          lastnamecontroller.text,usernamecontroller.text);
     }
   }
 
   @override
   RegistarViweModel intichange() {
     return RegistarViweModel();
+  }
+
+  @override
+  void goToHome(MyUser user) {
+    var userProvider=Provider.of<UserProvider>(context);
+    userProvider.user=user;
+    print('_____________________________________________________________________________________________');
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
   }
 
 

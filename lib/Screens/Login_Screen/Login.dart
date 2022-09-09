@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/Screens/Create/Creat_acount.dart';
 import 'package:untitled1/base.dart';
+import 'package:untitled1/models/my_user.dart';
 
+import '../../providers/user_provider.dart';
 import '../Create/States.dart';
+import '../home/home.dart';
 import 'Navigat_login.dart';
 import 'Register_login.dart';
 
@@ -27,9 +30,11 @@ class _LoginScreenState extends BaseState<LoginScreen, RegisterLogin>
         child: Stack(children: [
           Container(
               child: Image.asset(
-            'assets/background.jpeg',
+            'assets/images/main_bg.png',fit: BoxFit.fill,height: double.infinity
+                ,width: double.infinity,
           )),
           Scaffold(
+            backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
               centerTitle: true,
@@ -84,7 +89,7 @@ class _LoginScreenState extends BaseState<LoginScreen, RegisterLogin>
                           }, child: Text('Login',style: TextStyle(color: Colors.black),)),
                           InkWell(
                               onTap: (){
-                                Navigator.pushNamed(context, 'Create');
+                                Navigator.pushNamed(context, Createe.routName);
                               },
                               child: Text('Create New Account',style: TextStyle(color: Colors.blue),)),
 
@@ -106,7 +111,14 @@ class _LoginScreenState extends BaseState<LoginScreen, RegisterLogin>
   }
   void Recive(){
     if (formKey.currentState!.validate()) {
-      viewModel.Recive(emailcontroller.text, passwordcontroller.text);
+      viewModel.login(emailcontroller.text, passwordcontroller.text);
     }
+  }
+
+  @override
+  void goToHome(MyUser user) {
+    var userProvider=Provider.of<UserProvider>(context,listen: false);
+    userProvider.user=user;
+    Navigator.pushReplacementNamed(context,HomeScreen.routeName);
   }
 }
