@@ -58,7 +58,7 @@ class _AddRoomState extends BaseState<AddRoom,AddRoomViewModel> implements AddRo
             borderRadius: BorderRadius.circular(12)
           ),
           child: Form(
-    key: formKey,
+             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
