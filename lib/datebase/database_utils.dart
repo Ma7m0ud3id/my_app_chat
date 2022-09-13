@@ -37,6 +37,8 @@ class DateBaseUtils{
     var userSnapShot=await getUserCollection().doc(userId).get();
     return userSnapShot.data()!;
   }
+
+
   static Future<List<Room>> getRoomsFromFireStore()async{
     var querySnapShot=await getRoomsCollection().get();
     return querySnapShot.docs.map((doc) => doc.data()).toList();

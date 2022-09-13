@@ -22,8 +22,13 @@ class _HomeScreenState extends BaseState<HomeScreen,HomeViewModel> implements Ho
     super.initState();
     viewModel.Navigatore=this;
     print('___________________________________________________________________________________');
-    viewModel.getRooms();
-    print('_________________________________________________________________________________________');
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      await gitroom();
+      setState(() {
+
+      });
+    });
+    print('______________________________________________________________');
   }
   @override
   Widget build(BuildContext context) {
@@ -58,6 +63,7 @@ class _HomeScreenState extends BaseState<HomeScreen,HomeViewModel> implements Ho
                 Expanded(
                   child: Consumer<HomeViewModel>(
                     builder: (c,vm,child){
+                      //print(vm.rooms[1].title);
                       return GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -66,7 +72,7 @@ class _HomeScreenState extends BaseState<HomeScreen,HomeViewModel> implements Ho
                           ),
                           itemCount:vm.rooms.length
                           ,itemBuilder: (c,index){
-                        return
+                        return //Text('${vm.rooms.first.title}',style: TextStyle(color: Colors.black,fontSize: 50),);
                           RoomWidget(vm.rooms[index]);
                       });
                     },
@@ -83,6 +89,10 @@ class _HomeScreenState extends BaseState<HomeScreen,HomeViewModel> implements Ho
 
   @override
   HomeViewModel intichange() =>HomeViewModel();
+  gitroom(){
+    return viewModel.getRooms();
+  }
+
 
 
 }

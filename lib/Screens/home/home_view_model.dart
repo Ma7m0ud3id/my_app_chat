@@ -11,7 +11,7 @@ class HomeViewModel extends BaseViewModel<HomeNavigator>{
 
   void getRooms()async{
     rooms= await DateBaseUtils.getRoomsFromFireStore();
-    print(rooms);
+    print(" _____________________________________________${rooms.first.title}");
   }
 
 }
